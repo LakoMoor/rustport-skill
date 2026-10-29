@@ -38,7 +38,8 @@ def locations(agent, home, project=None, use_env=True):
 
 
 def bundle_files():
-    yield SOURCE / 'SKILL.md', Path('SKILL.md')
+    for filename in ('SKILL.md', 'LICENSE', 'NOTICE'):
+        yield SOURCE / filename, Path(filename)
     for directory in ('scripts', 'assets', 'references'):
         root = SOURCE / directory
         if root.exists():

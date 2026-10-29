@@ -27,3 +27,9 @@ remaining alive is not itself failure or proof that --help is supported.
 
 Unknown: original caller roles and full Unicode behavior; no original-side
 comparison, full VPD parsing, graphics, animation or whole-editor compatibility.
+
+## License
+
+Rustport additions are Apache-2.0; the retained upstream assembly material and
+applicable openMMD attribution remain covered by the original MIT notice in
+[evidence/ORIGINAL-LICENSE](evidence/ORIGINAL-LICENSE).

@@ -1,5 +1,6 @@
 ---
 name: rustport
+license: Apache-2.0
 description: Port games and applications to Rust, or build compatible Rust runtimes that load an existing game's content, using wgpu when needed. Use for Rust ports, engine reimplementations, and continued compatibility work on an existing port, including projects in the style of Horizon or openOMSI. Work from original behavior, real content, and differential tests. Not for unrelated new Rust applications.
 ---
 

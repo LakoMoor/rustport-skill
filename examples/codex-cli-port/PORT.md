@@ -2,8 +2,8 @@
 
 Completed dependency-free source port of `original/main.c` into `port/src/main.rs`.
 No GPU, unsafe code, C bindings, external crates, or network access. Original source
-and installed skill were left unchanged. No license file was supplied; redistribution
-rights remain unverified. This implementation was explicitly requested for local testing.
+and installed skill were left unchanged. The C input is an original synthetic fixture created for this integration test.
+The fixture and Rust port are distributed under the repository Apache-2.0 license.
 
 ## Build and run
 
