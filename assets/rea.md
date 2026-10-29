@@ -1,10 +1,13 @@
-# Using REA (https://rea.tools) when the original has no source
+# Using REA when the original has no source
+
+Site: https://rea.tools - Repo: https://github.com/morluto/rea (MIT; MCP server + CLI, runs locally). Full tool catalog: `docs/mcp-contracts.md` in the repo; the list below is a starting subset.
 
 REA lets an agent read decompiled code, instructions and call relationships of shipped software, observe it while
 running, and check recovered rules against the original. Targets: native executables/libraries, JavaScript/Electron
 apps, browsers/web apps, Android APKs (also managed .NET, firmware).
 
 ## Setup (needs user approval - it writes agent config)
+Requires Node.js 22.x/24.x/26.x + npm. Works with Claude Code, Codex, Cursor, Gemini CLI, Grok Build, any local-MCP agent. CLI without MCP: `npm i -g rea-agents` then `rea --help`, or `npx -y rea-agents@latest analyze-javascript-application <dir> --json`. Update: `rea update`.
 ```bash
 npx -y rea-agents@latest doctor --json            # diagnose, read-only
 npx -y rea-agents@latest setup --dry-run --json   # show the plan to the user
@@ -32,4 +35,5 @@ Also load the `reverse-engineer-anything` skill; it routes by target type.
 - Separate observed / inferred / unknown. Never claim execution behavior from static analysis.
 - Version-pin: record hash, version, platform of the inspected build.
 - Reconstruct, don't copy: reimplement logic in idiomatic Rust; recovered constants and rules are fine, decompiler output is not a deliverable.
-- Respect licenses and law; only analyze what you're permitted to. Leave user data untouched when running the original.
+- Native decompilation uses Hopper/Ghidra/IDA/Kuna; commercial ones (IDA, Hopper, JEB) must be licensed by the user - REA grants none. Static JS analysis needs no native engine.
+- Respect licenses and law (REA's stated scope: lawful research, interoperability, preservation, software you own or are authorized to examine); only analyze what you're permitted to. Leave user data untouched when running the original.
