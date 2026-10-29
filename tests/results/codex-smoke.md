@@ -27,3 +27,13 @@ and a narrow instruction-following scenario. It does not test the interactive
 The npm `codex` launcher on this machine failed before startup because its vendor
 binary was missing (ENOENT); the bundled client above was used without changing
 that installation. No credentials or raw session logs are included here.
+
+## Full source-port follow-up
+
+Codex then completed the dependency-free C-to-Rust example in
+`examples/codex-cli-port/`: it compiled the original and captured 13 goldens before
+writing Rust, compared save/load in both directions, ran 120 seeded traces and
+parser edge cases, and passed offline build/fmt/clippy checks. A separate parent
+check compared another 200 traces of 1,000 commands each byte-for-byte.
+Performance timings varied; no speed or whole-game compatibility claim is made.
+The final process exited successfully. Interactive `/skills` remains untested.
