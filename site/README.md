@@ -10,7 +10,7 @@ node site/check.mjs
 python3 -m http.server 8764 --directory docs
 ```
 
-Production: https://lakomoor.github.io/claude-rustport-skill/
+Production: https://lakomoor.github.io/rustport-skill/
 
 Pages publishes main:/docs. Installation commands and documentation links target
 main. Evidence notes distinguish measured CLI tests from static-only binary

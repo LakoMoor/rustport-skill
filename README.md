@@ -12,8 +12,8 @@ One Agent Skills bundle for **Codex, Claude Code, OpenCode, Pi, DeepSeek Harness
 Requires Python 3.9+. Clone first:
 
 ```sh
-git clone https://github.com/LakoMoor/claude-rustport-skill.git
-cd claude-rustport-skill
+git clone https://github.com/LakoMoor/rustport-skill.git
+cd rustport-skill
 python3 install.py --agent all
 ```
 
@@ -123,6 +123,6 @@ and retain applicable original notices.
 
 ## Website
 
-Visit [rustport](https://lakomoor.github.io/claude-rustport-skill/).
+Visit [rustport](https://lakomoor.github.io/rustport-skill/).
 The landing-page source is in [docs/](docs/), with agent-specific install
 commands, workflow details and the limits of the recorded integration tests.
