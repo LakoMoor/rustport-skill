@@ -49,7 +49,7 @@ Check the license of the source allows a derivative port; if unclear, flag it to
 ### 1. Survey
 `bash $RP/scripts/survey.sh <src>` → languages/LOC, build files, engine & graphics-API hints, assets, tests, risk hotspots (globals, raw pointers, threads, RNG).
 Then read the entry point and trace the main loop. Write down: data flow per frame, state owners, I/O boundaries (files, net, input, audio, GPU).
-**Build and run the original.** If it can't be built, say so and lower the fidelity claim accordingly.
+**Build and run the original when source is supplied.** For a shipped binary, identify its exact build and attempt an isolated, bounded launch instead; follow step 1b. If execution is unavailable, record the blocker and lower the fidelity claim accordingly.
 
 ### 1b. No source? Use REA (rea.tools)
 If only a shipped artifact exists (native exe/dylib, `.app`, APK, Electron/ASAR, minified JS, web app), recover behavior with **REA** instead of guessing. Check first that you are allowed to (own code, permissive license, interoperability/clean-room context); if unclear, ask the user and stop.
