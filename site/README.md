@@ -1,18 +1,17 @@
 # rustport website
 
-Buildless HTML/CSS/JavaScript landing page. Apache-2.0, like the original rustport
-material. The landscape is an inline vector illustration, not a real parity result.
+The public GitHub Pages source is [../docs/](../docs/) on main. Buildless HTML,
+CSS and JavaScript; no build action or package installation required.
 
-From this directory:
+From the repository root:
 
 ```sh
-node check.mjs
-python3 -m http.server 8764 --directory dist
+node site/check.mjs
+python3 -m http.server 8764 --directory docs
 ```
 
-The installation selector targets `codex/portable-rustport` while the multi-agent
-changes are in PR #1. Update clone commands and documentation links after merging.
-The field notes distinguish measured CLI coverage from static-only binary recovery.
+Production: https://lakomoor.github.io/claude-rustport-skill/
 
-Sites deployment identity and access configuration are maintained separately from
-this public source snapshot. No hosting credentials or private manifest is included.
+Pages publishes main:/docs. Installation commands and documentation links target
+main. Evidence notes distinguish measured CLI tests from static-only binary
+recovery. The landscape is a vector illustration, not a real parity result.

@@ -123,5 +123,6 @@ and retain applicable original notices.
 
 ## Website
 
-The landing-page source is in [site/](site/README.md), with agent-specific install
+Visit [rustport](https://lakomoor.github.io/claude-rustport-skill/).
+The landing-page source is in [docs/](docs/), with agent-specific install
 commands, workflow details and the limits of the recorded integration tests.
