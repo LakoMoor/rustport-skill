@@ -120,3 +120,8 @@ clients are separate projects and are not bundled or relicensed here.
 Using rustport does not automatically apply Apache-2.0 to a generated port, the
 original program, or its assets. Choose the target project's license separately
 and retain applicable original notices.
+
+## Website
+
+The landing-page source is in [site/](site/README.md), with agent-specific install
+commands, workflow details and the limits of the recorded integration tests.
