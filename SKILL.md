@@ -1,6 +1,6 @@
 ---
 name: rustport
-description: Port a game or application (C/C++, C#, Java, Python, JS/TS, Unity/Godot-style projects, GL/Vulkan/D3D/Metal renderers) to Rust, using wgpu when GPU rendering or compute is needed. Triggers when the user asks to port, rewrite, migrate or reimplement a program or game in Rust ("port this to Rust", "rewrite in Rust with wgpu", "convert this OpenGL game to wgpu"). Works incrementally - survey, scope, golden tests captured from the ORIGINAL, headless core first, then rendering - and proves parity with automated comparisons instead of eyeballing. Not for writing new Rust programs from scratch or for fixing existing Rust code.
+description: Port games and applications to Rust, or build compatible Rust runtimes that load an existing game's content, using wgpu when needed. Use for Rust ports, engine reimplementations, and continued compatibility work on an existing port, including projects in the style of Horizon or openOMSI. Work from original behavior, real content, and differential tests. Not for unrelated new Rust applications.
 ---
 
 # rustport — port games & apps to Rust (+ wgpu)
@@ -12,7 +12,7 @@ recorded from the original — not from your reading of its code. Never claim pa
 
 1. **The original is the spec.** Where code and your intuition disagree, run the original and observe.
 2. **Oracle before code.** Capture golden outputs (state dumps, logs, screenshots, audio hashes, save files) from the original *before* writing Rust.
-3. **Core first, pixels last.** Port deterministic logic into a window-free `*-core` crate and test it headless. Add winit/wgpu only after the core matches.
+3. **Headless-testable core, early integration.** Keep deterministic logic independent of the window/GPU. For a whole runtime, connect a small real-content vertical slice early; do not postpone all integration until every core module is ported.
 4. **Vertical slices, always green.** Port one module at a time; after each, `cargo check` + its golden test pass. Never leave the tree in a half-translated state across slices.
 5. **Idiomatic where free, literal where observable.** Restructure ownership (indices instead of pointers), but keep algorithms, iteration order, float op order and RNG streams identical wherever outputs depend on them.
 6. **No `unsafe`, no `unwrap()` on I/O, no new global state** unless logged in `docs/PORT.md` with a reason.
@@ -21,14 +21,29 @@ recorded from the original — not from your reading of its code. Never claim pa
 
 ## Locations
 
-Skill dir: `$CLAUDE_PROJECT_DIR/.claude/skills/rustport` or `~/.claude/skills/rustport` (call it `$RP`).
+Skill dir: the directory containing the loaded `SKILL.md` (call it `$RP`). Resolve bundled paths relative to it, never from a Claude-specific environment variable. Use the host agent's available file, shell and MCP tools by capability. Installation and invocation differences: [references/agents.md](references/agents.md).
 Helpers: `$RP/scripts/{survey,scaffold,parity}.sh`. Reference: `$RP/assets/mappings.md` (idioms, crate map, wgpu notes), `$RP/assets/PORT_TEMPLATE.md`.
 Work in the user's target dir (ask only if none given; default `./<name>-rs`).
+
+## Choose the work mode
+
+- **Source port:** translate available source incrementally with original-side tests.
+- **Compatible runtime:** reconstruct an existing game/engine around original assets,
+  maps, scripts, saves and measured behavior. Read
+  [references/compatible-runtime.md](references/compatible-runtime.md) before choosing
+  architecture and milestones. This includes Horizon/openOMSI-style projects.
+- **Continue a port:** read its existing plan, compatibility ledger and evidence;
+  fix the next real behavior gap instead of generating a new scaffold.
+
+Explicit invocation supplies the user's task; it does not grant extra tools or
+permissions. Commands: `/rustport` in Claude Code, OpenCode, Pi, DSH and Hermes;
+Codex uses `/skills` → `rustport` or `$rustport`. Pi also has `/skill:rustport`.
+The shared instructions work without a particular slash-command syntax.
 
 ## Workflow
 
 ### 0. Intake
-Identify: source location, target platforms (desktop/web/mobile), fidelity goal (bit-exact / within tolerance / idiomatic with feature parity), and what must be dropped. **Ask the user (≤4 bundled questions) only for real forks** — fidelity goal, platforms, scope cuts, license constraints. Look up anything unfamiliar (library, engine, file format) yourself first. In headless mode (`-p`) don't ask: record assumptions in `docs/PORT.md` and proceed.
+Identify: source location, target platforms (desktop/web/mobile), fidelity goal (bit-exact / within tolerance / idiomatic with feature parity), and what must be dropped. **Ask the user (≤4 bundled questions) only for real forks** — fidelity goal, platforms, scope cuts, license constraints. Look up anything unfamiliar (library, engine, file format) yourself first. In a non-interactive run, record reasonable assumptions in `docs/PORT.md` and proceed with independent work; do not invent missing authorization or required inputs.
 Check the license of the source allows a derivative port; if unclear, flag it to the user.
 
 ### 1. Survey
@@ -89,7 +104,7 @@ Run the headless golden comparison now. **Diverged? Bisect to the first differin
 - **Golden diverges** → bisect (first differing frame → first differing field → first differing function). Add temporary trace logging to *both* sides and diff them.
 - **Visual mismatch** → in order: sRGB/gamma, Y flip, NDC depth range, winding/cull, blend equation/premultiplied alpha, uniform padding, texture filtering/wrap, mip levels.
 - **Doom-loop guard**: same failure after 3 attempts → stop, write what you know to `docs/PORT.md`, change approach or ask the user. Don't mass-rewrite hoping it fixes itself.
-- **Scope blowup** (>~50k LOC or an entire engine): propose milestones and port a vertical slice first; confirm with the user.
+- **Scope blowup** (a large codebase or an entire engine): maintain the full objective, choose the next bounded real-content vertical slice, and continue within authorized scope. Ask only about unresolved product choices or actual blockers, not merely the LOC count.
 
 ## Reporting
 At each milestone give the user a short status: modules done/total, golden cases passing/total, known deviations, next step. Final report: what was ported, what was dropped, how to build/run, test results (real output, including failures), perf comparison, open risks. Never state "identical to the original" without parity-run evidence; say what the evidence covers.
