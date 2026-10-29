@@ -50,6 +50,9 @@ class InstallTests(unittest.TestCase):
                     self.assertIn(str(self.home / root / 'skills/rustport/SKILL.md'), command)
                     self.assertIn('$ARGUMENTS', command)
         self.assertFalse((self.home / '.codex/prompts').exists())
+        self.assertEqual((self.home / '.agents/skills/rustport/LICENSE').read_bytes(),
+                         (ROOT / 'LICENSE').read_bytes())
+        self.assertTrue((self.home / '.agents/skills/rustport/NOTICE').is_file())
 
     def test_all_project_layouts(self):
         self.run_install('--all', '--root', str(self.project))

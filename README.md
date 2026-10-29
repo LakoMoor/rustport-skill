@@ -104,3 +104,19 @@ Installer tests use temporary homes/projects and do not start LLM sessions. Layo
 and adapter tests do not prove interactive end-to-end behavior in all six clients.
 After a wgpu update, generate a temporary workspace with `scripts/scaffold.sh` and
 check it with Cargo on the intended platform before claiming the template builds.
+
+## License
+
+The rustport skill, installer, helpers, templates, documentation, and original
+examples are licensed under [Apache-2.0](LICENSE), unless a file states otherwise.
+Copyright 2026 LakoMoor and contributors.
+
+The binary-derived openMMD example retains upstream MIT-covered material and its
+[original copyright and license notice](examples/binary-name-slice/evidence/ORIGINAL-LICENSE).
+Those upstream notices remain applicable; the repository license does not replace
+third-party terms. See [NOTICE](NOTICE) for attribution. REA and the supported agent
+clients are separate projects and are not bundled or relicensed here.
+
+Using rustport does not automatically apply Apache-2.0 to a generated port, the
+original program, or its assets. Choose the target project's license separately
+and retain applicable original notices.
