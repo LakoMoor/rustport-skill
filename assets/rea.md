@@ -37,3 +37,22 @@ Also load the `reverse-engineer-anything` skill; it routes by target type.
 - Reconstruct, don't copy: reimplement logic in idiomatic Rust; recovered constants and rules are fine, decompiler output is not a deliverable.
 - Native decompilation uses Hopper/Ghidra/IDA/Kuna; commercial ones (IDA, Hopper, JEB) must be licensed by the user - REA grants none. Static JS analysis needs no native engine.
 - Respect licenses and law (REA's stated scope: lawful research, interoperability, preservation, software you own or are authorized to examine); only analyze what you're permitted to. Leave user data untouched when running the original.
+
+## Provider and runtime checks
+
+An MCP server can have a different environment from the shell running `rea doctor`.
+Use the connected server's `binary_session` availability to determine whether its
+selected provider can analyze the target; a shell diagnostic is not proof the MCP
+provider is absent. Record disagreement rather than replacing working configuration.
+For large binaries, let the initial analysis finish and inspect provider progress
+where available; avoid launching duplicate analyses while it is pending.
+
+On a host that cannot execute the target's OS/architecture, static recovery can
+continue, but runtime goldens remain unavailable. Record the exact failed launch
+and missing runtime (for example Windows PE on macOS without Wine or a Windows VM).
+Do not equate successful `open_binary` with successful execution or decompilation.
+
+When dependencies prevent running the original, a stubbed/instrumented harness
+may isolate a subsystem but is not the original application. List every stub and
+repair, label its outputs as harness-derived, and keep original runtime acceptance
+blocked. Do not publish stub-derived goldens as unmodified-original evidence.
