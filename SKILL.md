@@ -36,6 +36,13 @@ Check the license of the source allows a derivative port; if unclear, flag it to
 Then read the entry point and trace the main loop. Write down: data flow per frame, state owners, I/O boundaries (files, net, input, audio, GPU).
 **Build and run the original.** If it can't be built, say so and lower the fidelity claim accordingly.
 
+### 1b. No source? Use REA (rea.tools)
+If only a shipped artifact exists (native exe/dylib, `.app`, APK, Electron/ASAR, minified JS, web app), recover behavior with **REA** instead of guessing. Check first that you are allowed to (own code, permissive license, interoperability/clean-room context); if unclear, ask the user and stop.
+- Tools: `mcp__rea__*` if connected, plus the `reverse-engineer-anything` skill. If absent: `npx -y rea-agents@latest setup --dry-run --json`, show the plan to the user, apply only after approval, restart the agent. Details: `assets/rea.md`.
+- Use it to: list functions/strings/resources, decompile the routines behind each feature, trace the main loop, and capture runtime behavior (browser/Electron/process) as golden data for step 3.
+- Treat output as **observation / inference / unknown**; cite Evidence IDs in `docs/PORT.md`. Decompiled code is a hint about behavior - reimplement idiomatically, don't transliterate pseudo-C. Fidelity claims are bounded by what was observed.
+- Pin the exact build/version inspected (hash + version) in `docs/PORT.md`; findings don't carry across versions.
+
 ### 2. Plan → `docs/PORT.md`
 `bash $RP/scripts/scaffold.sh <name> <dest> [--no-gpu]` creates a workspace (`<name>-core` + `<name>` binary, wgpu skeleton unless `--no-gpu`) and copies `PORT_TEMPLATE.md` to `docs/PORT.md`. Fill in: module map (source → crate::module, with strategy), dependency map (via `assets/mappings.md`), hard problems, milestones. Order modules **leaves first** (math, containers, parsers, rules) then up to the main loop, rendering last.
 Per module pick a strategy:

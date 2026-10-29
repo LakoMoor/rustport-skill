@@ -23,5 +23,8 @@ In Claude Code: *"Port ~/games/snake (C++/SDL2/OpenGL) to Rust with wgpu"* — t
 | `assets/mappings.md` | idiom map, C++/C#/Python → Rust crate map, wgpu gotchas, "do I need wgpu?" table |
 | `assets/PORT_TEMPLATE.md` | living port plan copied to `docs/PORT.md` |
 
+## No source code?
+For closed binaries/APK/Electron the skill uses [REA](https://rea.tools) (`npx rea-agents@latest setup`) to recover behavior and record golden data. See `assets/rea.md`.
+
 ## Maintenance
 wgpu's API changes every release. After bumping, run `scripts/scaffold.sh t /tmp/t` and fix `assets/wgpu_template` until `cargo check` is green.
