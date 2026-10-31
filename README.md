@@ -112,6 +112,21 @@ Read [Workbench](references/workbench.md), [reverse engineering routes](referenc
 
 <!-- rustport-next/workbench -->
 
+## Native Lab: deeper executable recovery and differential fuzzing
+
+Native Lab adds a real Ghidra headless Java exporter, SHA-256-provenanced binary function slices, an optional bounded x86-64 Unicorn emulator, a static-function-to-ledger importer, and seeded original-vs-Rust differential fuzzing. These components are **optional**: the normal source-port workflow, six agent clients and workbench still work without Ghidra/Unicorn.
+
+```sh
+python3 scripts/native_lab.py doctor
+python3 scripts/native_lab.py analyze --binary /path/to/Game.exe --output .rustport/native/functions.json --allow-analysis
+python3 scripts/native_lab.py ingest --export .rustport/native/functions.json --db port-ledger.sqlite
+python3 scripts/differential_fuzz.py harness.json --output .rustport/fuzz/001 --seed 42 --iterations 100 --allow-execute-original
+```
+
+Ghidra analysis and Unicorn emulation are not secure sandboxes; run suspicious inputs in an isolated VM. A static Ghidra finding or Unicorn function result is **not** a measured original-game oracle. Read [Native Lab](references/native-lab.md) and the [Native Lab website](https://lakomoor.github.io/rustport-skill/native-lab.html). The Ghidra command contract has synthetic tests; real Ghidra/Unicorn integration requires those dependencies and has not been certified by the bundled tests.
+
+<!-- rustport-next/native-lab -->
+
 ## Validation and maintenance
 
 ```sh

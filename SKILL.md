@@ -111,6 +111,14 @@ External tools (REA, Ghidra, Unicorn) may provide more complete binary research,
 
 <!-- rustport-next/workbench -->
 
+## Native Lab: opt-in deep reverse engineering
+
+For authorized native games with no source, read [references/native-lab.md](references/native-lab.md) and [references/workbench.md](references/workbench.md). `scripts/native_lab.py` supports Ghidra headless analysis (`analyze`), importing inferred functions to the compatibility ledger (`ingest`), extracting bounded file-offset slices (`slice`), and optionally emulating self-contained x86-64 functions via Unicorn (`emulate`). `scripts/differential_fuzz.py` runs *explicitly configured* original and Rust JSON-stdin harnesses on seeded random inputs and tries to minimize the first mismatch. All executable analysis / execution require explicit opt-in flags. These utilities DO NOT automatically port an EXE or certify gameplay equivalence; do not substitute emulator output for real original-side traces.
+
+Keep Ghidra output, original code fragments, and generated execution artifacts local in `.rustport/` (Git-ignored), respect game licensing and authorization, and use a VM for suspect binaries. Never claim a dependency was tested if Ghidra or Unicorn were unavailable. Do not install these optional tools or change MCP configuration without approval. After a recovered rule is implemented in Rust, validate against an independent reference oracle using the established `workbench parity` and ledger audit.
+
+<!-- rustport-next/native-lab -->
+
 ## Failure handling
 - **Build error in third-party crate version** → check the crate's changelog/examples at the pinned version; don't downgrade unless necessary.
 - **Borrow-checker fights** → redesign ownership (ids/arenas/split borrows, `std::mem::take`), not `Rc<RefCell<…>>` everywhere and never `unsafe`.

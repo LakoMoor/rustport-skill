@@ -25,6 +25,12 @@ For nontrivial, long-running work use [workbench.md](workbench.md) for a local S
 
 <!-- rustport-next/workbench -->
 
+## Native-function recovery and seeded differential trials
+
+Use [native-lab.md](native-lab.md) for Ghidra headless function recovery and a bounded optional Unicorn x86-64 emulator. Static function locations are *inferred*, emulator output proves only the extracted code under supplied CPU state, and differential fuzzing validates only sampled inputs. The game itself must be observed separately to establish a real reference oracle. `scripts/differential_fuzz.py` emits traces suitable for strict workbench comparison. Do not alter original assets or publish proprietary binary outputs.
+
+<!-- rustport-next/native-lab -->
+
 ## Maintain a compatibility ledger
 
 Create `docs/COMPATIBILITY.md` or a machine-readable equivalent. Every tracked

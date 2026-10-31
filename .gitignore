@@ -3,3 +3,12 @@ Cargo.lock
 .DS_Store
 __pycache__/
 *.pyc
+
+# rustport-native-lab/private-evidence
+.rustport/
+port-ledger.sqlite
+port-ledger.sqlite-*
+reference.lock.json
+original-decompiled/
+original-assets/
+proprietary/

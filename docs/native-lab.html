@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#efeee7">
+<meta name="description" content="rustport Native Lab: static Ghidra analysis, SHA-256 function provenance, bounded Unicorn x86-64 probes, and differential fuzzing for Rust game ports.">
+<title>Native Lab / rustport</title>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="native-lab.css">
+</head>
+<body>
+<header class="nav wrap"><a class="brand" href="index.html"><span class="logo">rp<span>↗</span></span>rustport</a><nav aria-label="Main"><a href="index.html#workflow">Process</a><a href="workbench.html">Workbench</a><a class="source" href="https://github.com/LakoMoor/rustport-skill">Source ↗</a></nav></header>
+<main>
+<section class="n-hero wrap"><span class="eyebrow"><span class="dot"></span> NATIVE LAB / STATIC → EMULATED → MEASURED</span><div class="n-hero-grid"><div><h1>Reverse the rule.<br><em>Prove the port.</em></h1><p class="intro">A deeper native-game workflow: inspect a shipped executable, recover function maps, probe a bounded machine-code slice and compare a separately instrumented original with Rust.</p><div class="hero-actions"><a class="button" href="https://github.com/LakoMoor/rustport-skill/blob/main/references/native-lab.md">Read the technical guide <span>↗</span></a><a class="text-link" href="workbench.html">Evidence Workbench ↗</a></div><p class="micro">OPT-IN ANALYSIS · LOCAL EVIDENCE · NO GAME ASSETS BUNDLED</p></div><div class="n-pipeline" role="img" aria-label="Flow diagram: game executable analyzed by Ghidra, optionally emulated by Unicorn, compared against Rust with an independent reference oracle"><div class="n-head"><span>RUSTPORT / RESEARCH PIPELINE</span><span>vNEXT</span></div><div class="n-node"><span>INPUT</span><b>Original .exe / .dll</b><small>SHA-256 pinned · no runtime launch</small></div><div class="n-down">↓ &nbsp; STATIC INFERENCE</div><div class="n-pair"><div class="n-node"><span>GHIDRA</span><b>Functions + calls</b><small>Headless export</small></div><div class="n-node"><span>LEDGER</span><b>Unknown → mapped</b><small>Evidence per symbol</small></div></div><div class="n-down">↓ &nbsp; BOUNDED EMULATION</div><div class="n-node accent"><span>UNICORN / OPTIONAL</span><b>Isolated x86-64 function</b><small>Instruction &amp; time budgets · not a VM</small></div><div class="n-down">↓ &nbsp; INDEPENDENT EXPERIMENT</div><div class="n-pair"><div class="n-node"><span>ORIGINAL HARNESS</span><b>Golden traces</b><small>Observed behavior</small></div><div class="n-node"><span>RUST PROBE</span><b>Port traces</b><small>Same input sequence</small></div></div><div class="n-end">FIRST DIFFERING FIELD / REPLAY / AUDIT</div><div class="n-bottom">SCHEMATIC · NOT A CLAIM OF WHOLE-GAME PARITY</div></div></div></section>
+<section class="n-stages wrap"><span class="eyebrow">01 / REAL TOOLS, CLEAR LIMITS</span><h2>Closer to the metal.<br>Still evidence-led.</h2><div class="n-cards"><article><span>01 — RECOVER</span><h3>Ghidra Headless</h3><p>Bundled Java exporter records original function entry points, names, body size and bounded call edges. Optional decompilation remains private, and exports are SHA-256 identified.</p><code>native_lab.py analyze · ingest</code></article><article><span>02 — EXPLORE</span><h3>Unicorn x86-64</h3><p>Take an explicitly verified raw function slice through a limited emulation harness. No OS, dynamic loader, or external calls. Do not confuse this with observing the game itself.</p><code>native_lab.py slice · emulate</code></article><article><span>03 — CHALLENGE</span><h3>Differential fuzzing</h3><p>Run independent original and Rust JSON harnesses on seeded inputs. Capture the first difference, preserve a replay corpus and attempt a smaller failing input.</p><code>differential_fuzz.py · parity</code></article></div></section>
+<section class="n-console"><div class="wrap n-console-grid"><div><span class="eyebrow">02 / CLI LAB</span><h2>Agent workflows.<br>Not magic prompts.</h2><p>Native tools are optional. Analysis and execution require explicit opt-in, are bounded and may require an isolated VM. The code does not silently download software, modify your MCP settings or install agent plugins.</p><p class="n-muted">Commands below are documented examples. They are not results from a real game.</p></div><div class="n-terminal"><div class="n-terminal-head"><span>LOCAL / RESEARCH</span><span>PYTHON 3.9+</span></div><pre>python3 scripts/native_lab.py doctor
+
+python3 scripts/native_lab.py analyze \
+  --binary Game.exe \
+  --output .rustport/native/functions.json \
+  --allow-analysis
+
+python3 scripts/native_lab.py ingest \
+  --export .rustport/native/functions.json \
+  --db port-ledger.sqlite
+
+python3 scripts/differential_fuzz.py \
+  harness.json --output .rustport/fuzz/001 \
+  --seed 42 --iterations 100 \
+  --allow-execute-original</pre></div></div></section>
+<section class="n-proof wrap"><div><span class="eyebrow">03 / WHAT IS VERIFIED</span><h2>Evidence levels<br>are not interchangeable.</h2></div><div class="n-levels"><article><span>STATIC</span><b>Inferred</b><p>Function locations from disassembly are hypotheses, not observations of gameplay.</p></article><article><span>EMULATED</span><b>Bounded</b><p>Machine code behavior depends on captured ABI state, relocations and available memory.</p></article><article><span>OBSERVED</span><b>Reference oracle</b><p>A real original-side harness is required before claiming runtime behavior.</p></article><article><span>COMPARED</span><b>Parity for tested cases</b><p>Recorded equivalence does not certify all game mechanics or asset compatibility.</p></article></div></section>
+<section class="n-footer wrap"><p>Ghidra and Unicorn are independent third-party projects and are not bundled. Their real integration requires local tools; current automated tests validate interfaces using synthetic fixtures. Never commit proprietary game artifacts.</p><a class="button" href="https://github.com/LakoMoor/rustport-skill">View rustport source <span>↗</span></a></section>
+</main>
+<footer class="wrap"><a class="brand" href="index.html">rustport<span class="footer-dot">.</span></a><p>Built by <a href="https://github.com/LakoMoor">LakoMoor</a> &amp; contributors</p><a href="workbench.html">Workbench ↗</a><span>Evidence first. Claim only what you can test.</span></footer>
+</body></html>
