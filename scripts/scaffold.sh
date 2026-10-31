@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # rustport scaffold — create a Cargo workspace: <name>-core (pure logic, no window/GPU) + <name> (app/wgpu frontend).
 # Usage: scaffold.sh <name> <dest_dir> [--no-gpu]
-set -eu
+set -euo pipefail
 name="${1:?name}"; dest="${2:?dest}"; gpu=1; [ "${3:-}" = "--no-gpu" ] && gpu=0
+[[ "$name" =~ ^[a-zA-Z][a-zA-Z0-9_-]*$ ]] || { echo "Invalid Rust package name: $name" >&2; exit 2; }
 skill="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 mkdir -p "$dest"; cd "$dest"
 [ -e Cargo.toml ] && { echo "Cargo.toml already exists in $dest" >&2; exit 1; }

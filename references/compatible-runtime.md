@@ -19,6 +19,12 @@ for unit tests; label them, and keep real-content acceptance separate. If conten
 or the reference executable is unavailable, continue independent work and state
 which integration and behavioral checks remain unavailable.
 
+## Executable evidence ledger
+
+For nontrivial, long-running work use [workbench.md](workbench.md) for a local SQLite behavior ledger with `origin`, `target`, `evidence`, confidence, runtime-wired flag and `compared`/`verified` states. Pin the owned original binary with SHA-256 in a **local ignored** `reference.lock.json` and use [scenarios.md](scenarios.md) for explicit deterministic probes. The trace comparator rejects empty or malformed results and audits changed proof artifacts. A passing test certifies **only the bounded trace and current original build**, not the whole game or independent authenticity of the oracle. Do not infer original-side runtime behavior solely from static analysis.
+
+<!-- rustport-next/workbench -->
+
 ## Maintain a compatibility ledger
 
 Create `docs/COMPATIBILITY.md` or a machine-readable equivalent. Every tracked

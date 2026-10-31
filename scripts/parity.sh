@@ -24,6 +24,9 @@ def cmp_png(fa, fb):
     if A.size != B.size: return f"size {A.size} vs {B.size}"
     m = max(e[1] for e in ImageChops.difference(A, B).getextrema())
     return None if m <= 2 else f"max channel diff {m}"
+if not os.path.isdir(g) or not os.path.isdir(p):
+    print('ERROR: both golden and port directories must exist')
+    sys.exit(2)
 bad = missing = ok = 0
 for root, _, files in os.walk(g):
     for f in files:
@@ -41,6 +44,15 @@ for root, _, files in os.walk(g):
             except UnicodeDecodeError: err = None if open(fa,'rb').read() == open(fb,'rb').read() else "binary differs"
         if err: print(f"DIFF    {rel}: {err}"); bad += 1
         else: ok += 1
+if not (ok or bad or missing):
+    print('EMPTY golden directory: no tests were executed')
+    bad += 1
+for root, _, files in os.walk(p):
+    for f in files:
+        rel = os.path.relpath(os.path.join(root, f), p)
+        if not os.path.isfile(os.path.join(g, rel)):
+            print(f'EXTRA   {rel}: unexpected port output')
+            bad += 1
 print(f"parity: ok={ok} diff={bad} missing={missing}")
 sys.exit(1 if bad or missing else 0)
 PY

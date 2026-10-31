@@ -1,0 +1,25 @@
+.wb-hero{padding:100px 0 95px;min-height:540px}
+.wb-hero h1{margin-top:38px;max-width:850px}
+.wb-hero .intro{max-width:670px}
+.wb-flow{padding:65px 0 90px;border-top:1px solid var(--line)}
+.wb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:58px}
+.wb-grid article{min-height:245px;padding:25px 22px;background:#e5e7db;border:1px solid #d3d8ca;display:flex;flex-direction:column}
+.wb-grid h3{margin:16px 0 0}
+.wb-grid p{font-size:13px;line-height:1.7;color:var(--muted)}
+.wb-grid code{display:block;margin-top:auto;font:10px var(--mono);color:var(--green)}
+.wb-index{font:10px var(--mono);color:var(--orange)}
+.wb-terminal-section{background:var(--green);color:var(--paper);padding:88px 0}
+.wb-terminal-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:70px}
+.wb-terminal-grid h2{font-size:44px}
+.wb-terminal-grid p{font-size:14px;color:#bfccbb;max-width:360px}
+.wb-terminal{border:1px solid #728574;background:#152c20;padding:0 18px 12px}
+.wb-terminal-head{display:flex;justify-content:space-between;border-bottom:1px solid #345340;padding:20px 0;font:9px var(--mono);color:#abc1a9}
+.wb-terminal pre{padding:25px 0;margin:0;font:12px/1.85 var(--mono);color:#d2edcf;white-space:pre-wrap;overflow-wrap:anywhere}
+.wb-terminal p{font:10px/1.6 var(--mono);max-width:none}
+.wb-evidence{padding:95px 0 115px}
+.wb-evidence h2{margin:16px 0 42px}
+.wb-guardrails{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-bottom:35px}
+.wb-guardrails p{border-top:1px solid var(--line);padding-top:17px;font-size:14px;color:var(--muted)}
+.wb-guardrails b{display:block;color:var(--ink);font-weight:600;margin-bottom:10px}
+@media(max-width:950px){.wb-grid{grid-template-columns:repeat(2,1fr)}.wb-terminal-grid{grid-template-columns:1fr}.wb-guardrails{grid-template-columns:1fr}.wb-hero{padding:70px 0}.wb-flow,.wb-evidence{padding-top:70px}}
+@media(max-width:600px){.wb-grid{grid-template-columns:1fr}.wb-hero h1{font-size:clamp(44px,12vw,64px);letter-spacing:-3px}.wb-terminal-grid h2{font-size:32px}}

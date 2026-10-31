@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#efeee7">
+  <meta name="description" content="rustport Workbench: evidence ledger, original and Rust execution, trace parity and version-locked reproducibility.">
+  <title>Workbench / rustport</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="workbench.css">
+</head>
+<body>
+  <header class="nav wrap"><a class="brand" href="index.html"><span class="logo">rp<span>↗</span></span>rustport</a><nav aria-label="Main"><a href="index.html#workflow">Process</a><a href="index.html#install">Install</a><a class="source" href="https://github.com/LakoMoor/rustport-skill">GitHub ↗</a></nav></header>
+  <main>
+    <section class="wb-hero wrap"><span class="eyebrow"><span class="dot"></span> WORKBENCH / EVIDENCE FIRST</span><h1>Stop guessing.<br><em>Start comparing.</em></h1><p class="intro">A practical, standard-library-powered way to inventory a game, pin the original build, map functions to Rust and compare deterministic state traces. A passing test is a bounded result, not a whole-game compatibility claim.</p><div class="hero-actions"><a class="button" href="https://github.com/LakoMoor/rustport-skill/blob/main/references/workbench.md">Read instructions <span>↗</span></a><a class="text-link" href="index.html">Back to rustport ↗</a></div></section>
+    <section class="wb-flow wrap"><div class="section-title"><span class="eyebrow">01 / MEASURED PORTING</span><h2>One feature.<br>One oracle. One verdict.</h2><p>Give the agent a stable source of evidence and a next actionable gap.</p></div>
+      <div class="wb-grid">
+        <article><div class="wb-index">01 / DISCOVER</div><h3>Inventory</h3><p>Identify formats and code-bearing files. Hash the exact original binary without executing it.</p><code>inspect · inventory · pin</code></article>
+        <article><div class="wb-index">02 / TRACK</div><h3>Port ledger</h3><p>Map original entry points to Rust functions and distinguish implemented, wired and trace-compared results.</p><code>ledger add · set · audit</code></article>
+        <article><div class="wb-index">03 / EXECUTE</div><h3>Two real processes</h3><p>Run a deliberately selected original-side probe and Rust probe with identical scripted inputs.</p><code>oracle_runner.py --compare</code></article>
+        <article><div class="wb-index">04 / VERIFY</div><h3>First mismatch</h3><p>Reject empty traces and stale evidence. Compare actual events with exact numbers by default.</p><code>parity · report · audit</code></article>
+      </div>
+    </section>
+    <section class="wb-terminal-section"><div class="wrap wb-terminal-grid"><div><span class="eyebrow">02 / REPRODUCIBLE BY DESIGN</span><h2>Readable commands.<br>Real exit codes.</h2><p>The CLI requires no REA account or GPU. Ghidra, REA and Unicorn remain optional external tools used only when they improve the specific investigation.</p></div><div class="wb-terminal"><div class="wb-terminal-head"><span>EXAMPLE / TERMINAL</span><span>PYTHON 3.9+</span></div><pre>python3 scripts/workbench.py doctor
+python3 scripts/workbench.py pin \
+  --original /games/Game.exe \
+  --output reference.lock.json
+
+python3 scripts/oracle_runner.py \
+  scenario.json \
+  --output ./capture \
+  --allow-execute-original --compare
+
+python3 scripts/workbench.py ledger \
+  --db port-ledger.sqlite audit</pre><p>These commands show the interface; they do not claim a game has been tested here.</p></div></div></section>
+    <section class="wb-evidence wrap"><span class="eyebrow">03 / GUARDRAILS</span><h2>No green checkmark without evidence.</h2><div class="wb-guardrails"><p><b>Separate environments.</b> Both processes get distinct basic scratch folders. This is not a security sandbox. Run untrusted programs only in a VM.</p><p><b>Scope the claim.</b> Lock file hashes and passing traces prove only a specific recorded comparison. They do not establish that a trace was independently captured or a game is 1:1 complete.</p><p><b>Preserve the original.</b> Game assets, binaries and decompiler dumps stay on the user's local machine, outside Git history.</p></div><a class="text-link" href="https://github.com/LakoMoor/rustport-skill/blob/main/references/workbench.md">Full technical guide ↗</a></section>
+  </main>
+  <footer class="wrap"><a class="brand" href="index.html">rustport<span class="footer-dot">.</span></a><p>Built by <a href="https://github.com/LakoMoor">LakoMoor</a> &amp; contributors</p><a href="https://github.com/LakoMoor/rustport-skill">Source ↗</a><span>Evidence before claims.</span></footer>
+</body>
+</html>

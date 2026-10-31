@@ -94,6 +94,24 @@ and runtime-observation tools. [REA integration](assets/rea.md) is optional; the
 skill must disclose unavailable tools and unverified behavior rather than invent
 results. Original game content stays local to the user's installation.
 
+## Workbench: evidence-led Rust ports
+
+The optional Python standard-library workbench augments the agent skill with a durable SQLite function/behavior ledger, executable SHA-256 pinning, strict JSON/JSONL trace comparisons, stale-proof audits and opt-in dual-process capture. It does not automatically decompile, execute or certify a whole game.
+
+```bash
+python3 scripts/workbench.py doctor
+python3 scripts/workbench.py pin --original /path/to/Game.exe --output reference.lock.json
+python3 scripts/workbench.py ledger --db port-ledger.sqlite add --id input.step --origin 'Game.exe:0x1234' --target 'input::step' --evidence 'docs/TRACES.md'
+python3 scripts/workbench.py ledger --db port-ledger.sqlite set --id input.step --status implemented --wired 1
+python3 scripts/oracle_runner.py scenario.json --output ./capture --allow-execute-original --compare
+python3 scripts/workbench.py parity ./capture/original.jsonl ./capture/port.jsonl --db port-ledger.sqlite --id input.step --reference-lock reference.lock.json
+python3 scripts/workbench.py ledger --db port-ledger.sqlite audit
+```
+
+Read [Workbench](references/workbench.md), [reverse engineering routes](references/reverse-methods.md), [agent handoffs](references/agent-roles.md), [scenario schema](references/scenarios.md) and the [site workbench](https://lakomoor.github.io/rustport-skill/workbench.html). The runner does not sandbox unsafe games; use an isolated VM for untrusted software. `compared` and `verified` are *bounded trace statuses*, not full-engine certification.
+
+<!-- rustport-next/workbench -->
+
 ## Validation and maintenance
 
 ```sh

@@ -99,6 +99,18 @@ Run the headless golden comparison now. **Diverged? Bisect to the first differin
 - Performance: build `--release`, compare frame time/throughput to the original on the same scenario. Profile (`cargo flamegraph`, wgpu timestamp queries) only if slower; fix algorithmic issues before micro-opts.
 - `cargo clippy -- -D warnings`, `cargo fmt --check`, README (build/run/controls), license notes.
 
+## Evidence-led workbench (for significant game ports)
+
+If the target has complex behavior, no original source, real asset/script formats, or multiple sessions of development, read [references/workbench.md](references/workbench.md) and [references/reverse-methods.md](references/reverse-methods.md). Use [references/agent-roles.md](references/agent-roles.md) for independent reverser/porter/verifier handoffs, and [references/scenarios.md](references/scenarios.md) when running deterministic scenarios.
+
+The bundled `scripts/workbench.py` provides `doctor`, `init`, `inspect`, `inventory`, `pin`, `ledger`, and `parity`. `scripts/oracle_runner.py` runs two *explicitly selected* programs with separate basic scratch homes, only when the user approved execution and the agent passes `--allow-execute-original`; **it is not a sandbox**. Do not execute untrusted programs outside a protected VM.
+
+Before declaring verified behavior, identify the exact original binary build and hash, document independent oracle provenance, trace the *real player-facing* Rust runtime path, run the original and Rust probe against the same scenario, compare the results and audit stored evidence hashes. Use `ledger` to avoid repeating already mapped original functions. A missing oracle is not a pass. Unlocked passing traces are recorded as `compared`, never automatically `verified`.
+
+External tools (REA, Ghidra, Unicorn) may provide more complete binary research, but are **not** bundled, and absence must be reported. Do not install or enable external toolchains or MCP services without approval. This skill is not empirically shown to outperform GameFrame on full-game reconstruction. See existing source-port procedures below for smaller projects.
+
+<!-- rustport-next/workbench -->
+
 ## Failure handling
 - **Build error in third-party crate version** → check the crate's changelog/examples at the pinned version; don't downgrade unless necessary.
 - **Borrow-checker fights** → redesign ownership (ids/arenas/split borrows, `std::mem::take`), not `Rc<RefCell<…>>` everywhere and never `unsafe`.
